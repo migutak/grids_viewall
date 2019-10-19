@@ -14,7 +14,6 @@ function doRelease(connection) {
 class oracleService {
     getData(request, resultsCallback) {
         const SQL = this.buildSql(request);
-
         oracledb.getConnection(
         {
             user: dbConfig.user,
@@ -43,9 +42,8 @@ class oracleService {
     }
 
     buildSql(request) {
-
         const selectSql = this.createSelectSql(request);
-        const fromSql = ' from ecol.olympic_winners ';
+        const fromSql = ' from ecol.tqall ';
         const whereSql = this.createWhereSql(request);
         const limitSql = this.createLimitSql(request);
 
@@ -116,17 +114,17 @@ class oracleService {
     createTextFilterSql(key, item) {
         switch (item.type) {
             case 'equals':
-                return key + ' = \'' + (item.filter).toUpperCase() + '\'';
+                return 'upper(' + key + ') = \'' + (item.filter).toUpperCase() + '\'';
             case 'notEqual':
-                return key + ' != \'' + (item.filter).toUpperCase() + '\'';
+                return 'upper(' + key + ') != \'' + (item.filter).toUpperCase() + '\'';
             case 'contains':
                 return 'upper(' + key + ') like \'%' + (item.filter).toUpperCase() + '%\'';
             case 'notContains':
-                return key + ' not like \'%' + (item.filter).toUpperCase() + '%\'';
+                return 'upper(' + key + ') not like \'%' + (item.filter).toUpperCase() + '%\'';
             case 'startsWith':
-                return key + ' like \'' + (item.filter).toUpperCase() + '%\'';
+                return 'upper(' + key + ') like \'' + (item.filter).toUpperCase() + '%\'';
             case 'endsWith':
-                return key + ' like \'%' + (item.filter).toUpperCase() + '\'';
+                return 'upper(' + key + ') like \'%' + (item.filter).toUpperCase() + '\'';
             default:
                 console.log('unknown text filter type: ' + item.type);
                 return 'true';

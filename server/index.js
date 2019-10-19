@@ -15,7 +15,7 @@ app.use(webpackMiddleware(webpack(webpackConfig)));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.post('/data', function (req, res) {
+app.post('/viewall', function (req, res) {
     oracleService.getData(req.body, (rows, lastRow) => {
     res.json({rows: rows, lastRow: lastRow});
     });

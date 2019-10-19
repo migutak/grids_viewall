@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+  grids_viewall:
+    image: migutak/grids_viewall:1.0.0
+    container_name: grids_viewall
+    restart: always
+    environment:
+      - DB_USER=ecol
+      - DB_PASSWORD=ecol
+      - DB_CONNECTIONSTRING=192.168.0.82:1521/ORCLCDB.localdomain
+    ports:
+      - "4000:4000"
